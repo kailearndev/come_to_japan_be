@@ -40,3 +40,14 @@ export const lessonWord = pgTable('lesson_words', {
     .references(() => word.id, { onDelete: 'cascade' }),
   orderIndex: integer('order_index').notNull().default(0),
 });
+
+export const studyLog = pgTable('study_logs', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: uuid('user_id')
+    .notNull()
+    .references(() => user.id, { onDelete: 'cascade' }),
+  lessonId: uuid('lesson_id')
+    .notNull()
+    .references(() => lesson.id, { onDelete: 'cascade' }),
+  completedAt: timestamp('completed_at').notNull().defaultNow(),
+});
